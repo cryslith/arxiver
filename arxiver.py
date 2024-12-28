@@ -58,7 +58,7 @@ def process(deps, out_tar, args):
             with open(dep) as f, io.BytesIO() as g:
                 tarinfo = tarfile.TarInfo(name=dep)
                 content = f.read()
-                new_content = re.sub(r'(^|[^\\])%.*\n?', r"\1", content, re.MULTILINE)
+                new_content = re.sub(r'(^|[^\\\n])%.*\n?', r"\1", content, flags=re.MULTILINE)
                 g.write(new_content.encode('utf-8'))
                 tarinfo.size = g.tell()
                 g.seek(0)
