@@ -68,7 +68,7 @@ def process(deps, out_tar, args):
             out_tar.add(dep)
 
 def strip_comments(content):
-    return re.sub(r'((?:^|[^\\\n])(?:\\\\)*)%.*\n?', r"\1", content, flags=re.MULTILINE)
+    return re.sub(r'((?:^|[^\\\n])(?:\\\\)*)%.*(\n?)', r"\1%\2", content, flags=re.MULTILINE)
 
 def parse_args():
     parser = argparse.ArgumentParser()
