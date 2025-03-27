@@ -61,7 +61,7 @@ def process(deps, out_tar, args):
                 tarinfo = tarfile.TarInfo(name=dep)
                 content = f.read()
                 new_content = strip_comments(content)
-                g.write(strip_comments(f.read()).encode('utf-8'))
+                g.write(new_content.encode('utf-8'))
                 tarinfo.size = g.tell()
                 g.seek(0)
                 out_tar.addfile(tarinfo=tarinfo, fileobj=g)
