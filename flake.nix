@@ -18,6 +18,10 @@
       type = "app";
       program = "${arxiver-py}/bin/arxiver";
     };
+    apps.${system}.strip-comments = {
+      type = "app";
+      program = "${arxiver-py}/bin/strip-comments";
+    };
     devShells.${system}.default = pkgs.mkShell {
       packages = [
         arxiver-py

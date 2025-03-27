@@ -4,6 +4,7 @@ version = "0.0.1"
 
 [project.scripts]
 arxiver = "arxiver.main:main"
+strip-comments = "arxiver.strip:main"
 
 [build-system]
 requires = ["hatchling"]

@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # Adapted from D.J. Sutherland's code and modified by cryslith.
 
 import argparse
