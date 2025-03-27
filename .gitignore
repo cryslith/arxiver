@@ -18,3 +18,5 @@
 *.blg
 *.bkp
 *.xdv
+
+__pycache__/

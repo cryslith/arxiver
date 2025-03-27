@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import unittest
-from arxiver import strip_comments
+from .. import strip_comments
 
 class TestArxiver(unittest.TestCase):
     def test_strip_comments(self):
@@ -18,6 +18,3 @@ class TestArxiver(unittest.TestCase):
 
         self.assertEqual(strip_comments('a%\nb'), 'a%\nb')
         self.assertEqual(strip_comments('a%b\nc'), 'a%\nc')
-
-if __name__ == '__main__':
-    unittest.main()

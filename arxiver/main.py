@@ -9,6 +9,8 @@ import re
 import subprocess
 import tarfile
 
+from .strip import strip_comments
+
 class LatexmkException(Exception):
     def __init__(self, message, base_error=None):
         super(LatexmkException, self).__init__(message)
@@ -66,9 +68,6 @@ def process(deps, out_tar, args):
         else:
             print(dep)
             out_tar.add(dep)
-
-def strip_comments(content):
-    return re.sub(r'((?:^|[^\\\n])(?:\\\\)*)%.*(\n?)', r"\1%\2", content, flags=re.MULTILINE)
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -133,6 +132,3 @@ def main():
 
     with tarfile.open(args.dest, mode="w:gz") as t:
         process(deps, t, args)
-
-if __name__ == "__main__":
-    main()
