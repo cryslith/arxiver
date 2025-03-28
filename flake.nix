@@ -14,13 +14,15 @@
     )) pkgs.python3Packages;
   in {
     packages.${system}.default = arxiver-py;
-    apps.${system}.arxiver = {
-      type = "app";
-      program = "${arxiver-py}/bin/arxiver";
-    };
-    apps.${system}.strip-comments = {
-      type = "app";
-      program = "${arxiver-py}/bin/strip-comments";
+    apps.${system} = {
+      arxiver = {
+        type = "app";
+        program = "${arxiver-py}/bin/arxiver";
+      };
+      strip-comments = {
+        type = "app";
+        program = "${arxiver-py}/bin/strip-comments";
+      };
     };
     devShells.${system}.default = pkgs.mkShell {
       packages = [
