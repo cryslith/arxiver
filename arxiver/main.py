@@ -75,7 +75,13 @@ def parse_args():
         help="Name of the main tex file.",
     )
     parser.add_argument(
-        "--dest", default="arxiv.tar.gz", help="Output path [default: %(default)s]."
+        "-o", "--output", "--dest", default="arxiv.tar.gz", help="Output path [default: %(default)s]."
+    )
+    parser.add_argument(
+        "-f", "--overwrite",
+        action="store_true",
+        default=False,
+        help="Overwrite output file without warning.",
     )
     parser.add_argument(
         "--include-package",
@@ -128,5 +134,11 @@ def main():
 
     deps = get_deps(base_name=args.base_name, latexmk=args.latexmk)
 
-    with tarfile.open(args.dest, mode="w:gz") as t:
+    if (
+            not args.overwrite and
+            os.path.exists(args.output) and
+            not input(f'Output file {args.output} already exists, overwrite? [y/N] ').lower().startswith('y')
+    ):
+        return
+    with tarfile.open(args.output, mode="w:gz") as t:
         process(deps, t, args)

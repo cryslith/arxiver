@@ -24,7 +24,7 @@
         program = "${arxiver-py}/bin/strip-comments";
       };
     };
-    devShells.${system}.default = pkgs.mkShell {
+    devShells.${system}.default = pkgs.mkShellNoCC {
       packages = [
         arxiver-py
       ];
