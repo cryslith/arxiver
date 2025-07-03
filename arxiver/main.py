@@ -31,6 +31,7 @@ class LatexmkException(Exception):
         self.base_error = base_error
 
 def get_deps(base_name="main", latexmk="latexmk", deps_file=".deps", verbosity=1):
+    print('Running latexmk...')
     args = [
         latexmk,
         "-silent",
@@ -158,3 +159,4 @@ def main():
         return
     with tarfile.open(args.output, mode="w:gz") as t:
         process(deps, t, args)
+    print(f'Output written to {args.output}.')
