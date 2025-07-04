@@ -30,7 +30,7 @@ class LatexmkException(Exception):
         super(LatexmkException, self).__init__(message)
         self.base_error = base_error
 
-def get_deps(base_name="main", latexmk="latexmk", deps_file=".deps", verbosity=1):
+def get_deps(base_name, latexmk="latexmk", skip_bbl=False):
     print('Running latexmk...')
     args = [
         latexmk,
@@ -49,7 +49,9 @@ def get_deps(base_name="main", latexmk="latexmk", deps_file=".deps", verbosity=1
             + e.output.decode()
         )
         raise LatexmkException(msg, base_error=e)
-    return extract_dependencies(output.decode())
+    latexmk_deps = extract_dependencies(output.decode())
+    bbl_deps = [x for x in [base_name + '.bbl'] if not skip_bbl and os.path.exists(x)]
+    return latexmk_deps + bbl_deps
 
 def extract_dependencies(output):
     deps = re.search(
@@ -97,7 +99,6 @@ def parse_args():
     parser.add_argument(
         "-f", "--overwrite",
         action="store_true",
-        default=False,
         help="Overwrite output file without warning.",
     )
     parser.add_argument(
@@ -114,6 +115,11 @@ def parse_args():
         "--latexmk",
         default="latexmk",
         help="Path to the latexmk command [default: %(default)s].",
+    )
+    parser.add_argument(
+        '--skip-bbl',
+        action='store_true',
+        help="Don't include .bbl file if it exists",
     )
     g = parser.add_mutually_exclusive_group()
     g.add_argument(
@@ -149,7 +155,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    deps = get_deps(base_name=args.base_name, latexmk=args.latexmk)
+    deps = get_deps(args.base_name, latexmk=args.latexmk, skip_bbl=args.skip_bbl)
 
     if (
             not args.overwrite and
